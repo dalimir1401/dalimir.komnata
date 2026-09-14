@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#191a26">
+  <meta name="description" content="Мой идеальный вечер. Исследуй свою комнату, выполни четыре маленьких дела и создай уютный вечер.">
+  <title>Мой идеальный вечер · Комната Далимира</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23191a26'/%3E%3Cpath d='M8 9v14h16V9M8 16h16M16 9v14' fill='none' stroke='%23f6c78a' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main id="game" aria-label="Игра «Мой идеальный вечер»">
+    <div id="scene" aria-label="Трёхмерная комната. Нажмите на пол, чтобы пройти, или на маркер задания." role="application" tabindex="0"></div>
+    <header class="hud-top">
+      <div class="brand"><span class="brand-symbol">✦</span><div><span class="eyebrow">КОМНАТА ДАЛИМИРА</span><h1>Мой идеальный вечер</h1></div></div>
+      <div class="top-actions"><span class="score"><span aria-hidden="true">✧</span> <b id="score">0</b><span class="score-label">очков</span></span><button class="icon-button" id="sound" aria-label="Включить звук" title="Звук" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 6m0-6-5 6"/></svg></button><button class="icon-button" id="pause" aria-label="Пауза" title="Пауза · Esc"><svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg></button></div>
+    </header>
+    <section class="quest-card" aria-label="Текущее задание">
+      <div class="quest-heading"><span class="eyebrow">МАЛЕНЬКИЕ ДЕЛА</span><span id="progress-text">0 / 4</span></div>
+      <div class="quest-progress" aria-label="Прогресс заданий"><span></span><span></span><span></span><span></span></div>
+      <div class="quest-main"><span class="quest-number" id="quest-number">01</span><div><h2 id="quest-title">Немного света</h2><p id="quest-description">Включи лампу на столе</p></div></div>
+      <ol class="quest-list"><li class="active" data-quest="0"><span>01</span> Настольная лампа <i>●</i></li><li data-quest="1"><span>02</span> Фокус за компьютером <i></i></li><li data-quest="2"><span>03</span> Велосипед к прогулке <i></i></li><li data-quest="3"><span>04</span> Вечерний уют <i></i></li></ol>
+      <p class="quest-tip" id="quest-tip">Подойди к светящемуся маркеру</p>
+    </section>
+    <div class="room-note"><span class="small-moon" aria-hidden="true">☾</span><span id="mood">Тихий вечер</span></div>
+    <div id="world-labels"></div>
+    <div class="camera-tools"><button id="rotate" class="icon-button" aria-label="Повернуть комнату" title="Повернуть комнату"><svg viewBox="0 0 24 24"><path d="M19 10a7 7 0 1 0 0 5M19 4v6h-6"/></svg></button><button id="fullscreen" class="icon-button" aria-label="На весь экран" title="На весь экран"><svg viewBox="0 0 24 24"><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/></svg></button></div>
+    <footer class="hud-bottom">
+      <div class="player-card"><img src="./assets/hero.jpg" alt="Далимир" draggable="false"><div><span class="eyebrow">ТВОЙ ПЕРСОНАЖ</span><strong>Далимир</strong><span class="player-status" id="player-status">Дома. Можно выдохнуть.</span></div></div>
+      <div class="keyboard-help"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> идти</span><span><kbd>E</kbd> действие</span><span class="click-help">или нажми на пол</span></div>
+      <div class="action-wrap"><p id="action-hint">Подойди к лампе</p><button id="interact" class="action-button" disabled><span id="action-label">Включить лампу</span><kbd>E</kbd></button></div>
+    </footer>
+    <div id="joystick" aria-label="Джойстик движения" role="group"><div class="stick-lines"></div><div id="stick"></div></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div id="loading" class="loading"><span class="loader"></span><span>Зажигаем твой вечер…</span></div>
+    <dialog id="pause-dialog"><div class="dialog-content"><span class="dialog-emblem">☾</span><span class="eyebrow">НИКУДА НЕ ТОРОПИМСЯ</span><h2>Небольшая пауза</h2><p>Твоя комната подождёт.</p><button id="resume" class="action-button">Продолжить вечер <span>↗</span></button><button id="restart-paused" class="text-button">Начать заново</button><div class="pause-help">WASD / стрелки — движение<br>E — действие · Esc — пауза<br>На телефоне: джойстик и кнопка действия</div></div></dialog>
+    <dialog id="final-dialog"><div class="dialog-content"><span class="dialog-emblem">✦</span><span class="eyebrow">ЧЕТЫРЕ ДЕЛА. ОДИН ХОРОШИЙ ВЕЧЕР.</span><h2>Комната готова,<br>вечер начинается</h2><p>Свет, немного фокуса и всё для прогулки.<br>Теперь время для себя.</p><div class="final-score">✧ <strong id="final-score">400</strong><span>очков уюта</span></div><button id="restart-final" class="action-button">Ещё один вечер <span>↻</span></button><button id="explore" class="text-button">Остаться в комнате</button></div></dialog>
+    <div class="rotate-screen" id="rotate-screen"><svg viewBox="0 0 80 80" aria-hidden="true"><rect x="27" y="17" width="27" height="46" rx="5" transform="rotate(35 40 40)"/><path d="M13 34A29 29 0 0 1 57 13m-1-9 1 9-9 2M66 47a28 28 0 0 1-42 20m0 9v-9l9-1"/></svg><h2>Поверни телефон</h2><p>Вся комната — в горизонтальном экране.</p><span>Мой идеальный вечер · 16:9</span></div>
+    <noscript>Для игры включите JavaScript в браузере.</noscript>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
